@@ -4,14 +4,13 @@
 import argparse
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from transformers import AutoTokenizer
 
 from evidence_rag.ingestion.chunker import chunk_document
 from evidence_rag.ingestion.parser import parse_pdf
-
 
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 MAX_TOKENS = 384
@@ -94,7 +93,7 @@ def build_manifest(corpus_dir: Path) -> dict:
 
     return {
         "schema_version": "1.0",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "tokenizer": {
             "model": MODEL_NAME,
             "fingerprint_sha256": tokenizer_fingerprint,
